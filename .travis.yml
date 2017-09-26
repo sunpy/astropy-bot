@@ -1,0 +1,21 @@
+# This should be set to run as a monthly cron job on Travis. The environment
+# variables CRON_TOKEN and INSTALLATION_ID should be set through the web UI.
+
+language: c
+
+sudo: false
+
+os:
+    - linux
+
+env:
+  global:
+    - CONDA_DEPENDENCIES="requests"
+    - PYTHON_VERSION=3.6
+
+install:
+    - git clone git://github.com/astropy/ci-helpers.git
+    - source ci-helpers/travis/setup_conda.sh
+
+script:
+    - python check_stale.py
