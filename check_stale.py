@@ -7,7 +7,7 @@ URL = "https://astrochangebot.herokuapp.com"
 TOKEN = os.environ['CRON_TOKEN']
 INSTALLATION = os.environ['INSTALLATION_ID']
 
-repositories = ['astropy/ci-helpers', 'astropy/astropy-helpers']
+repositories = ['astropy/astropy', 'astropy/astropy-helpers']
 
 for hook in ['/close_stale_issues', '/close_stale_pull_requests']:
 
