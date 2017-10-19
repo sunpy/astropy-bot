@@ -19,7 +19,7 @@ for hook in ['/close_stale_issues', '/close_stale_pull_requests']:
                 'cron_token': TOKEN,
                 'installation': INSTALLATION}
 
-        req = requests.post(URL + hook, json=data)
+        req = requests.post(URL + hook, json=data, timeout=300)
         print(req.content)
         assert req.ok
 
