@@ -431,13 +431,19 @@ class PullRequestHandler(IssueHandler):
         else:
             return milestone['title']
 
+    def get_modified_filenames(self):
+        """Get all the filenames modified by this PR."""
+        files = paged_github_json_request(self._url_files,
+                                          headers=self._headers)
+        return [f['filename'] for f in files]
+
     def has_modified(self, filelist):
         """Check if PR has modified any of the given list of filename(s)."""
         found = False
-        files = paged_github_json_request(self._url_files,
-                                          headers=self._headers)
+        files = self.get_modified_files()
+
         for d in files:
-            if d['filename'] in filelist:
+            if d in filelist:
                 found = True
                 break
 

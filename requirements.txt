@@ -6,3 +6,5 @@ cryptography
 python-dateutil
 humanize
 pyyaml
+toml
+towncrier
