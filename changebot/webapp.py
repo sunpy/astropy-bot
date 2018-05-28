@@ -55,7 +55,9 @@ app.bot_username = 'astropy-bot'
 app.pull_request_failed = f'There were failures in checks - see comments by @{app.bot_username} above'
 
 # Import this here to register the check with the pull request checker
-from changebot.blueprints.changelog_checker import check_changelog_consistency  # noqa: E402 F401
+# from changebot.blueprints.changelog_checker import check_changelog_consistency  # noqa: E402 F401
+from changebot.blueprints.milestone_checker import process_milestone  # noqa: E402 F401
+from changebot.blueprints.towncrier_changelog_checker import process_towncrier_changelog  # noqa: E402 F401
 
 app.register_blueprint(pull_request_checker)
 app.register_blueprint(stale_issues)
