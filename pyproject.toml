@@ -1,3 +1,16 @@
-[ tool.sunpy-bot]
+[ tool.sunpy-bot ]
+  check_towncrier_changelog = true
+  post_pr_comment = true
+  check_milestone = true
+
+  # astropy checks
   changelog_check = false
   autoclose_stale_pull_request = false
+
+  [ tool.sunpybot.towncrier_changelog ]
+   help_url = "https://github.com/Cadair/sunpy/blob/towncrier/changelog/README.rst"
+
+[tool.towncrier]
+    package = "changebot"
+    filename = "CHANGELOG.rst"
+    directory = "changelog/"
