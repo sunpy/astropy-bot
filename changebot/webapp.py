@@ -51,7 +51,7 @@ app.pull_request_epilog = os.linesep + os.linesep + re.sub('(\w+)\n', r'\1', """
 app.pull_request_substring = "issues related to the changelog"
 
 app.pull_request_passed = 'All checks passed'
-app.bot_username = 'astropy-bot'
+app.bot_username = 'sunpybot'
 app.pull_request_failed = f'There were failures in checks - see comments by @{app.bot_username} above'
 
 # Import this here to register the check with the pull request checker
