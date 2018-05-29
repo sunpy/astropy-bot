@@ -139,9 +139,6 @@ def process_towncrier_changelog(pr_handler, repo_handler):
 
     skip_label = cl_config.get('changelog_skip_label', None)
 
-    if skip_label and skip_label in pr_handler.labels:
-        return [], None
-
     config = load_towncrier_config(repo_handler)
     section_dirs = calculate_fragment_paths(config)
     types = config['types'].keys()
@@ -159,11 +156,17 @@ def process_towncrier_changelog(pr_handler, repo_handler):
         if cl_config('verify_pr_number', False) and not verify_pr_number(pr_handler.number, matching_file):
             messages.append(cl_config.get("wrong_number_message", WRONG_NUMBER))
 
+    if skip_label and skip_label in pr_handler.labels:
+        messages = []
+
     if not repo_handler.get_config_value('post_pr_comment', False):
         if messages:
             message = ' '.join(messages)
             pr_handler.set_status('failure', message, current_app.bot_username + ': changelog',
                                   target_url=cl_config.get('help_url', None))
+            return [], None
+        else:
+            pr_handler.set_status('success', "The changelog looks good.", current_app.bot_username + ': changelog')
             return [], None
     else:
         if messages:
