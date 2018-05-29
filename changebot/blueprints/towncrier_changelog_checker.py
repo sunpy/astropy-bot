@@ -137,6 +137,11 @@ def process_towncrier_changelog(pr_handler, repo_handler):
 
     cl_config = repo_handler.get_config_value('towncrier_changelog', {})
 
+    skip_label = cl_config.get('changelog_skip_label', None)
+
+    if skip_label and skip_label in pr_handler.labels:
+        return [], None
+
     config = load_towncrier_config(repo_handler)
     section_dirs = calculate_fragment_paths(config)
     types = config['types'].keys()
