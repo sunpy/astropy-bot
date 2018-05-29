@@ -51,7 +51,7 @@ except ImportError:
         }
 
 
-def load_pyproject_config(repo_handler):
+def load_towncrier_config(repo_handler):
     """
     Load the pyproject.yaml file from the repo.
 
@@ -63,10 +63,6 @@ def load_pyproject_config(repo_handler):
     except FileNotFoundError:
         pyproject = {'tool': {'towncrier': {}}}
 
-    return pyproject
-
-
-def parse_towncrier_config(pyproject):
     return parse_toml(pyproject)
 
 
@@ -136,14 +132,12 @@ WRONG_NUMBER = "The number in the changelog file does not match this pull reques
 
 @pull_request_check
 def process_towncrier_changelog(pr_handler, repo_handler):
-    pyproject = load_pyproject_config(repo_handler)
-    skill_config = get_skill_config(pyproject)
 
-    if not skill_config.get("check_towncrier_changelog", True):
+    if not repo_handler.get_config_value("check_towncrier_changelog", True):
         return [], None
+    cl_config = repo_handler.get_config_value('towncrier_changelog', {})
 
-    cl_config = skill_config.get('towncrier_changelog', {})
-    config = parse_towncrier_config(pyproject)
+    config = load_towncrier_config(repo_handler)
     section_dirs = calculate_fragment_paths(config)
     types = config['types'].keys()
 
@@ -160,11 +154,11 @@ def process_towncrier_changelog(pr_handler, repo_handler):
         if cl_config('verify_pr_number', False) and not verify_pr_number(pr_handler.number, matching_file):
             messages.append(cl_config.get("wrong_number_message", WRONG_NUMBER))
 
-    if not skill_config.get('post_pr_comment', False):
+    if not repo_handler.get_config_value('post_pr_comment', False):
         if messages:
             message = ' '.join(messages)
             pr_handler.set_status('failure', message, current_app.bot_username + ': changelog',
-                                  target_url=cl_config['help_url'])
+                                  target_url=cl_config.get('help_url', None))
             return [], None
     else:
         if messages:
