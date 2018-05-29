@@ -440,7 +440,7 @@ class PullRequestHandler(IssueHandler):
     def has_modified(self, filelist):
         """Check if PR has modified any of the given list of filename(s)."""
         found = False
-        files = self.get_modified_files()
+        files = self.get_modified_filenames()
 
         for d in files:
             if d in filelist:
