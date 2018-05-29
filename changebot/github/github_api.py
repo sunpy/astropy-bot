@@ -137,8 +137,8 @@ class RepoHandler(object):
         except Exception as e:
             if warn_on_failure:
                 warnings.warn(str(e))
-        # Empty dict means calling code set the default
-        cfg = {}
+            # Empty dict means calling code set the default
+            cfg = {}
 
         return cfg
 
