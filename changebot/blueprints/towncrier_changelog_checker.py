@@ -135,6 +135,7 @@ def process_towncrier_changelog(pr_handler, repo_handler):
 
     if not repo_handler.get_config_value("check_towncrier_changelog", True):
         return [], None
+
     cl_config = repo_handler.get_config_value('towncrier_changelog', {})
 
     config = load_towncrier_config(repo_handler)
