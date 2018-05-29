@@ -1,13 +1,14 @@
 [ tool.sunpy-bot ]
   check_towncrier_changelog = true
-  post_pr_comment = true
   check_milestone = true
+  post_pr_comment = true
 
   # astropy checks
   changelog_check = false
   autoclose_stale_pull_request = false
 
   [ tool.sunpybot.towncrier_changelog ]
+   changelog_skip_label = "No Changelog Entry Needed"
    help_url = "https://github.com/Cadair/sunpy/blob/towncrier/changelog/README.rst"
 
 [tool.towncrier]
