@@ -120,7 +120,7 @@ def get_skill_config(pyproject):
 
 def verify_pr_number(pr_number, matching_file):
     # TODO: Make this a regex to check that the number is in the right place etc.
-    return pr_number in matching_file
+    return str(pr_number) in matching_file
 
 
 NO_CHANGELOG = "No changelog file was added in the correct directories."
@@ -151,7 +151,7 @@ def process_towncrier_changelog(pr_handler, repo_handler):
         messages.append(cl_config.get("missing_file_message", NO_CHANGELOG))
 
     else:
-        if check_changelog_type(types, modified_files):
+        if not check_changelog_type(types, matching_file):
             messages.append(cl_config.get("wrong_type_message", WRONG_TYPE))
         if cl_config.get('verify_pr_number', False) and not verify_pr_number(pr_handler.number, matching_file):
             messages.append(cl_config.get("wrong_number_message", WRONG_NUMBER))
@@ -172,4 +172,4 @@ def process_towncrier_changelog(pr_handler, repo_handler):
         if messages:
             return messages, False
         else:
-            return ["The changelog looks good."], True
+            return [], True

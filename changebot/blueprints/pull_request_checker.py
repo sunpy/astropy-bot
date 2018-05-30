@@ -99,7 +99,7 @@ def process_pull_request(repository, number, installation):
 
     if comments:
         message = current_app.pull_request_prolog.format(pr_handler=pr_handler, repo_handler=repo_handler)
-        message += '\n\n* '.join(comments) + current_app.pull_request_epilog
+        message += ''.join(comments) + current_app.pull_request_epilog
 
         comment_url = pr_handler.submit_comment(message, comment_id=comment_id,
                                                 return_url=True)
