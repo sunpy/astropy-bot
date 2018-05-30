@@ -153,7 +153,7 @@ def process_towncrier_changelog(pr_handler, repo_handler):
     else:
         if check_changelog_type(types, modified_files):
             messages.append(cl_config.get("wrong_type_message", WRONG_TYPE))
-        if cl_config('verify_pr_number', False) and not verify_pr_number(pr_handler.number, matching_file):
+        if cl_config.get('verify_pr_number', False) and not verify_pr_number(pr_handler.number, matching_file):
             messages.append(cl_config.get("wrong_number_message", WRONG_NUMBER))
 
     if skip_label and skip_label in pr_handler.labels:
