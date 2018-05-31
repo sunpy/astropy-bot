@@ -118,9 +118,16 @@ def get_skill_config(pyproject):
             return pyproject['tool'][current_app.bot_username]
 
 
-def verify_pr_number(pr_number, matching_file):
-    # TODO: Make this a regex to check that the number is in the right place etc.
-    return str(pr_number) in matching_file
+def verify_pr_number(pr_number, modified_files):
+    """
+    Verify that this PR number is in any of the changelog files added.
+    """
+    for clfile in modified_files:
+        # TODO: Make this a regex to check that the number is in the right place etc.
+        if str(pr_number) in clfile:
+            return True
+
+    return False
 
 
 NO_CHANGELOG = "No changelog file was added in the correct directories."
@@ -153,7 +160,7 @@ def process_towncrier_changelog(pr_handler, repo_handler):
     else:
         if not check_changelog_type(types, matching_file):
             messages.append(cl_config.get("wrong_type_message", WRONG_TYPE))
-        if cl_config.get('verify_pr_number', False) and not verify_pr_number(pr_handler.number, matching_file):
+        if cl_config.get('verify_pr_number', False) and not verify_pr_number(pr_handler.number, modified_files):
             messages.append(cl_config.get("wrong_number_message", WRONG_NUMBER))
 
     if skip_label and skip_label in pr_handler.labels:
