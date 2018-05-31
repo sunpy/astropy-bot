@@ -32,7 +32,8 @@ Configuration for the pull request checker.
 app.pull_request_prolog = re.sub('(\w+)\n', r'\1', """
 Thanks for the pull request @{pr_handler.user}!
 
-I am a bot that checks pull requests for milestones and changelog entries. I
+I am a bot that checks pull requests for milestones and changelog entries.
+ If you have any questions about what I am saying, please ask! I
  have the following to report on this pull request:
 """).strip() + os.linesep + os.linesep
 
