@@ -1,5 +1,4 @@
 import os
-import re
 
 from flask import Flask
 
@@ -31,6 +30,8 @@ Configure Plugins
 
 # Register the circleci artifact checker
 import baldrick.plugins.artifact_checker  # noqa
+import baldrick.plugins.milestone_checker  # noqa
+import baldrick.plugins.towncrier_changelog_checker  # noqa
 
 
 @app.route("/")
