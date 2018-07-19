@@ -10,13 +10,12 @@ from baldrick.blueprints import github, circleci
 Configure the App
 """
 
-app = Flask('astropy-bot')
+app = Flask('sunpy-bot')
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
 app.integration_id = int(os.environ['GITHUB_APP_INTEGRATION_ID'])
 app.private_key = os.environ['GITHUB_APP_PRIVATE_KEY']
-app.cron_token = os.environ['CRON_TOKEN']
 
 app.bot_username = 'sunpy-bot'
 
